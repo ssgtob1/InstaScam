@@ -20,46 +20,45 @@ app.use(express.static('public'));
 
 app.post('/login', function(req, res) {
     var login = {
-        userid: req.body.userid,
+        userName: req.body.userName,
         password: req.body.password
     };
     console.log(login.userid);
     
-    var p = db.getPassword(login.userid);
+    var p = db.getUser(login.userName);
     p.then(
         (val) => {
             
-            if (login.password == val) {
-                return db.allFollowingTweets(login.userid);
+            if (login.password == val.password) {
+                res.send(val);
              
             } else {
                 throw 'Username or password issue!';
             }
         }
-    ).then(
-        (val) => {
-            res.send(val);
-        }
     ).catch(
         (err) => {
+            res.status(500); 
             console.log(err);
             res.send(err);
         }
     )
 });
 
-app.post('/addTweet', function(req, res) {
-    var tweet = {
-        userid: req.body.userid,
-        tweetContent: req.body.tweetContent
+app.post('/insertUser', function(req, res) {
+    var user = {
+        userName: req.body.userName,
+        password: req.body.password,
+        profileName: req.body.profileName
     };
-    console.log('tweet user id = ' + tweet.userid);
-    console.log('tweet content = ' + tweet.tweetContent);
+    console.log('InstaScam user Name = ' + user.userName);
+    console.log('InstaScam password = ' + user.password);
+    console.log('InstaScam profile Name  =' + user.profileName);
     
-    var p = db.createTweet(tweet.userid, tweet.tweetContent);
+    var p = db.insertUser(user);
     p.then(
         (val) => {
-                res.send('Tweet for ' + tweet.userid + ' is added successfully!');
+                res.send('User ' + user.userName + ' is added successfully!');
         }
     ).catch(
         (err) => {

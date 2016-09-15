@@ -3,6 +3,10 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('InstaScam.db');
 
+function setDB(otherDB) {
+    db = otherDB;
+}
+
 initDB(db);
 
 function initDB() {
@@ -43,6 +47,7 @@ function initDB() {
 
 }
 
+
 function insertPicture(userName, fileName, fileTs) {
     console.log("db.js insertPicture userName: " + userName)
     console.log("db.js insertPicture fileName: " + fileName)
@@ -79,3 +84,39 @@ exports.initDB = initDB;
 exports.insertPicture = insertPicture;
 exports.getPictures = getPictures;
 
+
+function insertUser(user) {
+    return new Promise(
+        (resolve, reject) => {
+            var stmt = db.prepare("INSERT INTO User (UserName, Password, ProfileName) VALUES (?, ?, ?)");
+            stmt.run(user.userName, user.password, user.profileName, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    console.log("The ID of the last row inserted is: " + this.lastID);
+                    stmt.finalize();
+                    resolve('success');
+                }
+            });
+        });
+}
+
+function getUser(userName) {
+    return new Promise(
+        (resolve, reject) => {
+            var stmt = db.prepare("SELECT * FROM USER WHERE UserName = ?");
+            stmt.all(userName, function (err, rows) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(rows[0]);
+                }
+            });
+        });
+}
+
+exports.insertUser = insertUser;
+exports.getUser = getUser;
+exports.setDB = setDB;
