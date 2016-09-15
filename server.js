@@ -69,6 +69,58 @@ app.post('/addTweet', function(req, res) {
     )
 });
 
+app.post('/insertPicture/', function (req, res) {
+
+    var time = new Date();
+
+    var picture = {
+        username: req.body.username,
+        filename: req.body.filename
+    };
+
+    //replace filename with fileTs
+    var fileTs = time + "." + picture.filename.split('.').pop();
+
+    console.log('insertUser - username = ' + picture.username);
+    console.log('insertUser - filename = ' + picture.filename);
+    console.log('insertUser - fileTs = ' + fileTs);
+
+    var insertPic = dbFile.insertPicture(picture.username, picture.filename, fileTs);
+
+    insertPic.then((val) => {
+        res.send('Picture for ' + picture.username + ' is added successfully!');
+    }).catch(
+        (err) => {
+            console.log(err);
+            res.send(err);
+        }
+        )
+
+});
+
+app.get('/getPictures/', function (req, res) {
+
+    var picture = {
+        username: req.body.username,
+    };
+
+    console.log('input app.get getPictures - username = ' + username);
+
+    var thePictures = dbFile.getPictures(username);
+
+    thePictures.then(
+        (pictures) => {
+            console.log("output app.get getPictures: " + pictures);
+            res.send(pictures);
+        }
+    ).catch(
+        (err) => {
+            res.status(500);
+            res.send('output app.get getPictures error: issue getting Pictures');
+        }
+        );
+})
+
 app.post('/likeTweet', function(req, res) {
     var tweet = {
         userid: req.body.userid,

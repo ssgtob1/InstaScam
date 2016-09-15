@@ -17,8 +17,9 @@ function initDB() {
     CREATE TABLE IF NOT EXISTS Picture (
         PictureId INTEGER NOT NULL PRIMARY KEY,
         UserName TEXT,
-        FileName TEXT,
-        Date INTEGER DEFAULT CURRENT_TIMESTAMP,
+        ActualFileName TEXT,
+        SystemFileName INTEGER,
+        Insrt_TS INTEGER DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(UserName) REFERENCES User(UserName)
     );
 
@@ -26,6 +27,7 @@ function initDB() {
         CommentId INTEGER NOT NULL PRIMARY KEY,
         PictureId INTEGER,
         UserName TEXT,
+        Insrt_TS INTEGER DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(UserName) REFERENCES User(UserName),
         FOREIGN KEY(PictureId) REFERENCES Picture(PictureId)
     );
@@ -40,3 +42,40 @@ function initDB() {
     }); 
 
 }
+
+function insertPicture(userName, fileName, fileTs) {
+    console.log("db.js insertPicture userName: " + userName)
+    console.log("db.js insertPicture fileName: " + fileName)
+    console.log("db.js insertPicture fileTs: " + fileTs)
+    return new Promise(function (resolve, reject) {
+        var stmt = db.prepare(`INSERT INTO Picture (UserName, ActualFileName, SystemFileName) VALUES (?, ?, ?)`);        
+        stmt.run(userName, fileName, fileTs, function (err) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            console.log(this.lastID);
+            resolve(this.lastID);
+        });
+        stmt.finalize(); 
+    });
+}
+
+function getPictures(userName) {
+    console.log("db.js getPictures(userName): " + userName)
+    return new Promise(function (resolve, reject) {
+        var stmt = "SELECT PictureId as PictureId, UserName as UserName, ActualFileName as ActualFileName, SystemFileName as SystemFileName, Insrt_TS as Date FROM Picture where UserName = ?";
+        db.all(stmt, userName, function (err, rows) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(rows[0]);
+        });
+    });
+}
+
+exports.initDB = initDB;
+exports.insertPicture = insertPicture;
+exports.getPictures = getPictures;
+
