@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twitterz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/customcss/ourcss.css" rel="stylesheet" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+    
+  </head>
+    <style>
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+
+
+</style>
+
+</head>
+<body>
+
+
+  <div class="everything">
+  <div class="form">
+
+
+  <h2><span class="entypo-login"></span> Login</h2>
+  <button class="login" onclick="login()" ><span class="entypo-lock"></span></button>
+  <span class="entypo-user inputUserIcon"></span>
+  <input type="text" class="user" placeholder="username" name="userid" id="userid"/>
+  <span class="entypo-key inputPassIcon"></span>
+  <input type="password" class="pass" placeholder="password" name="password" id="password"/>
+</div>
+</div>
+    <script>
+        
+        $(".user").focusin(function(){
+        $(".inputUserIcon").css("color", "#e74c3c");
+        }).focusout(function(){
+        $(".inputUserIcon").css("color", "white");
+        });
+
+        $(".pass").focusin(function(){
+        $(".inputPassIcon").css("color", "#e74c3c");
+        }).focusout(function(){
+        $(".inputPassIcon").css("color", "white");
+        });
+    </script>
+
+
+</body>
+
+</html>
