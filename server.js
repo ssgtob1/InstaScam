@@ -1,7 +1,7 @@
 var express = require('express'),
     app = express(),
     fs = require('fs'),
-    html = fs.readFileSync('./index.html'),
+    // html = fs.readFileSync('./index.html'),
     bodyParser = require('body-parser'),
     db = require('./db'),
     path = require('path');
@@ -95,7 +95,7 @@ app.get('/', function(req, res) {
     res.writeHead(200, {
         'Content-Type': 'text/html'
     });
-    res.end(html);
+    // res.end(html);
 });
 
 app.get('/mainApp', function(req, res) {
