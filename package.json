@@ -1,0 +1,26 @@
+{
+  "name": "instascam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "react-dropzone": "^3.6.0",
+    "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssgtob1/InstaScam.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssgtob1/InstaScam/issues"
+  },
+  "homepage": "https://github.com/ssgtob1/InstaScam#readme"
+}
