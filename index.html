@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Twitterz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaScam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <!-- Bootstrap -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
@@ -10,7 +10,9 @@
     <link href="/customcss/ourcss.css" rel="stylesheet" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.js"></script>
-    
+    <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
   </head>
     <style>
 @import url(http://weloveiconfonts.com/api/?family=entypo);
@@ -23,20 +25,13 @@
 </head>
 <body>
 
-
-  <div class="everything">
-  <div class="form">
+<div id="InstaScam"></div>
 
 
-  <h2><span class="entypo-login"></span> Login</h2>
-  <button class="login" onclick="login()" ><span class="entypo-lock"></span></button>
-  <span class="entypo-user inputUserIcon"></span>
-  <input type="text" class="user" placeholder="username" name="userid" id="userid"/>
-  <span class="entypo-key inputPassIcon"></span>
-  <input type="password" class="pass" placeholder="password" name="password" id="password"/>
-</div>
-</div>
-    <script>
+
+</body>
+<script src="/reactApp.js" type="text/babel"> </script>
+   <script>
         
         $(".user").focusin(function(){
         $(".inputUserIcon").css("color", "#e74c3c");
@@ -50,8 +45,5 @@
         $(".inputPassIcon").css("color", "white");
         });
     </script>
-
-
-</body>
 
 </html>
