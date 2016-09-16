@@ -5,7 +5,45 @@ var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
 
+describe('InstaScam Database', function () {
+    it('Test that checks if insert and select function work', function () {
+        var user = {
+            userName: 'superman',
+            password: 'sahota',
+            profileName: 'ronsahota'
+        };
+        return db.insertUser(user).then(
+            (val) => {
+                return db.getUser(user.userName);
+            }
+        ).then(
+            (val) => {
+                console.log('whatever');
+                return val;
+            }
+            ).should.eventually.contain.keys({ UserName: 'superman', Password: 'sahota', ProfileName: 'ronsahota' });
+    });
+});
 
+describe('testing user', function () {
+    it('insert a user', function () {
+        var user = {
+            userName: 'JMelka',
+            password: 'abc123',
+            profileName: 'John'
+        };
+        return db.insertUser(user).then(
+            (val) => {
+                return db.getUser(user.userName);
+            }
+        ).then(
+            (val) => {
+                console.log('got user!');
+                return val;
+            }
+            ).should.eventually.contain.keys({ UserName: 'JMelka', Password: 'abc123', ProfileName: 'John' });
+    });
+});
 
 describe('testing pictures', function () {
 
@@ -17,12 +55,12 @@ describe('testing pictures', function () {
 
                 return db.getPictures('JMelka');
             }
-            ).then(
-                (val) => {
-                    return val[0];
-                }
+        ).then(
+            (val) => {
+                return val[0];
+            }
             ).should.eventually.contain.keys(expected);
-            // ).should.eventually.contain.keys({ UserName: 'John', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123.jpg' });
+        // ).should.eventually.contain.keys({ UserName: 'John', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123.jpg' });
     });
 
 
@@ -37,30 +75,12 @@ describe('testing comments', function () {
 
                 return db.getPictureComments(1);
             }
-            ).then(
-                (val) => {
-                    return val[0];
-                }
+        ).then(
+            (val) => {
+                return val[0];
+            }
             ).should.eventually.contain.keys(expected);
     });
 
-    describe('InstaScam Database', function () {
-        it('Test that checks if insert and select function work', function () {
-            var user = {
-                userName: 'superman',
-                password: 'sahota',
-                profileName: 'ronsahota'
-            };
-            return db.insertUser(user).then(
-                (val) => {
-                    return db.getUser(user.userName);
-                }
-            ).then(
-                (val) => {
-                    console.log('whatever');
-                    return val;
-                }
-                ).should.eventually.contain.keys({ UserName: 'superman', Password: 'sahota', ProfileName: 'ronsahota' });
-        });
-    });
+
 });
