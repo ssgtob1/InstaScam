@@ -132,11 +132,10 @@ app.post('/insertPicture/', multer({ dest: './photos/' }).single('upl'), functio
 
 });
 
-app.get('/getPictures/:username', function (req, res) {
+app.get('/getPictures/:userName', function (req, res) {
 
     var picture = {
-       userName: req.body.userName,
-       username: req.params.username,
+       userName: req.params.userName,
    };
 
     console.log('input app.get getPictures - userName = ' + picture.userName);
