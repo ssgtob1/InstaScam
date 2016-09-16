@@ -110,9 +110,9 @@ app.get('/getPictures/', function (req, res) {
         username: req.body.username,
     };
 
-    console.log('input app.get getPictures - username = ' + username);
+    console.log('input app.get getPictures - username = ' + picture.username);
 
-    var thePictures = dbFile.getPictures(username);
+    var thePictures = dbFile.getPictures(picture.username);
 
     thePictures.then(
         (pictures) => {
@@ -123,6 +123,54 @@ app.get('/getPictures/', function (req, res) {
         (err) => {
             res.status(500);
             res.send('output app.get getPictures error: issue getting Pictures');
+        }
+        );
+})
+
+app.post('/insertComment/', function (req, res) {
+
+    var picture = {
+        pictureId: req.body.pictureid,
+        username: req.body.username,
+        message: req.body.comment
+    };
+
+    console.log('insertComment - pictureId = ' + picture.pictureId);
+    console.log('insertComment - username = ' + picture.username);
+    console.log('insertComment - message = ' + picture.message);
+
+    var insertPic = dbFile.insertComment(picture.pictureId, picture.username, picture.message);
+
+    insertPic.then((val) => {
+        res.send('Comment for ' + picture.pictureId + ' is added successfully!');
+    }).catch(
+        (err) => {
+            console.log(err);
+            res.send(err);
+        }
+        )
+
+});
+
+app.get('/getPictureComments/', function (req, res) {
+
+    var picture = {
+        pictureId: req.body.pictureid,
+    };
+
+    console.log('input app.get getPictureComments - pictureid = ' + picture.pictureId);
+
+    var thePictureComments = dbFile.getPictureComments(picture.pictureId);
+
+    thePictureComments.then(
+        (pictureComments) => {
+            console.log("output app.get getPictureComments: " + pictureComments);
+            res.send(pictureComments);
+        }
+    ).catch(
+        (err) => {
+            res.status(500);
+            res.send('output app.get getPictureComments error: issue getting comments');
         }
         );
 })
