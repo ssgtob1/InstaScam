@@ -101,7 +101,7 @@ function insertPicture(userName, fileName, fileTs) {
 function getPictures(userName) {
     console.log("db.js getPictures(userName): " + userName)
     return new Promise(function (resolve, reject) {
-        var stmt = "SELECT PictureId as PictureId, UserName as UserName, ActualFileName as ActualFileName, SystemFileName as SystemFileName, Insrt_TS as Date FROM Picture where UserName = ?";
+        var stmt = "SELECT * FROM Picture where UserName = ?";
         db.all(stmt, userName, function (err, rows) {
             if (err) {
                 reject(err);

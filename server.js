@@ -119,6 +119,8 @@ app.post('/insertPicture/', multer({ dest: './photos/' }).single('upl'), functio
         console.log("upload and move file success!")
     })
 
+    var insertPic = db.insertPicture(picture.username, picture.filename, fileTs);
+
     insertPic.then((val) => {
         res.send('Picture for ' + user.userName + ' is added successfully!');
     }).catch(
@@ -130,11 +132,12 @@ app.post('/insertPicture/', multer({ dest: './photos/' }).single('upl'), functio
 
 });
 
-app.get('/getPictures/', function (req, res) {
+app.get('/getPictures/:username', function (req, res) {
 
     var picture = {
-        userName: req.body.userName,
-    };
+       userName: req.body.userName,
+       username: req.params.username,
+   };
 
     console.log('input app.get getPictures - userName = ' + picture.userName);
 
