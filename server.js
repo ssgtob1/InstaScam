@@ -4,7 +4,8 @@ var express = require('express'),
     html = fs.readFileSync('./index.html'),
     bodyParser = require('body-parser'),
     db = require('./db'),
-    path = require('path');
+    path = require('path'),
+    mkdirp = require('mkdirp');
 
 
 app.use(bodyParser.json());
@@ -58,6 +59,12 @@ app.post('/insertUser/', function(req, res) {
     var p = db.insertUser(user);
     p.then(
         (val) => {
+                var dirPath = '/public/photos/' + user.userName;
+                mkdirp(dirPath, function (err){
+                    if (err){
+                        console.log(err);
+                    }
+                });
                 res.send('User ' + user.userName + ' is added successfully!');
         }
     ).catch(
