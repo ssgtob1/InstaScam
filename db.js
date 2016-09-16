@@ -39,78 +39,13 @@ function initDB() {
     `
 
     db.exec(tableSql, function (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log('all good');
-    }); 
-
-}
-
-
-function insertPicture(userName, fileName, fileTs) {
-    console.log("db.js insertPicture userName: " + userName)
-    console.log("db.js insertPicture fileName: " + fileName)
-    console.log("db.js insertPicture fileTs: " + fileTs)
-    return new Promise(function (resolve, reject) {
-        var stmt = db.prepare(`INSERT INTO Picture (UserName, ActualFileName, SystemFileName) VALUES (?, ?, ?)`);        
-        stmt.run(userName, fileName, fileTs, function (err) {
-            if (err) {
-                reject(err);
-                return;
-            }
-            console.log(this.lastID);
-            resolve(this.lastID);
-        });
-        stmt.finalize(); 
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('all good');
     });
-}
 
-function getPictures(userName) {
-    console.log("db.js getPictures(userName): " + userName)
-    return new Promise(function (resolve, reject) {
-        var stmt = "SELECT PictureId as PictureId, UserName as UserName, ActualFileName as ActualFileName, SystemFileName as SystemFileName, Insrt_TS as Date FROM Picture where UserName = ?";
-        db.all(stmt, userName, function (err, rows) {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(rows);
-        });
-    });
-}
-
-function insertComment(pictureId, userName, message) {
-    console.log("db.js insertComment pictureId: " + pictureId)
-    console.log("db.js insertComment userName: " + userName)
-    console.log("db.js insertComment message: " + message)
-    return new Promise(function (resolve, reject) {
-        var stmt = db.prepare(`INSERT INTO Comment (PictureId, UserName, Message) VALUES (?, ?, ?)`);        
-        stmt.run(pictureId, userName, message, function (err) {
-            if (err) {
-                reject(err);
-                return;
-            }
-            console.log(this.lastID);
-            resolve(this.lastID);
-        });
-        stmt.finalize(); 
-    });
-}
-
-function getPictureComments(pictureId) {
-    console.log("db.js getPictureComments(pictureId): " + pictureId)
-    return new Promise(function (resolve, reject) {
-        var stmt = "SELECT CommentId as CommentId, PictureId as PictureId, UserName as UserName, Message as Message, Insrt_TS as Date FROM Comment where PictureId = ?";
-        db.all(stmt, pictureId, function (err, rows) {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(rows);
-        });
-    });
 }
 
 function insertUser(user) {
@@ -143,6 +78,70 @@ function getUser(userName) {
                 }
             });
         });
+}
+
+function insertPicture(userName, fileName, fileTs) {
+    console.log("db.js insertPicture userName: " + userName)
+    console.log("db.js insertPicture fileName: " + fileName)
+    console.log("db.js insertPicture fileTs: " + fileTs)
+    return new Promise(function (resolve, reject) {
+        var stmt = db.prepare(`INSERT INTO Picture (UserName, ActualFileName, SystemFileName) VALUES (?, ?, ?)`);
+        stmt.run(userName, fileName, fileTs, function (err) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            console.log(this.lastID);
+            resolve(this.lastID);
+        });
+        stmt.finalize();
+    });
+}
+
+function getPictures(userName) {
+    console.log("db.js getPictures(userName): " + userName)
+    return new Promise(function (resolve, reject) {
+        var stmt = "SELECT PictureId as PictureId, UserName as UserName, ActualFileName as ActualFileName, SystemFileName as SystemFileName, Insrt_TS as Date FROM Picture where UserName = ?";
+        db.all(stmt, userName, function (err, rows) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(rows);
+        });
+    });
+}
+
+function insertComment(pictureId, userName, message) {
+    console.log("db.js insertComment pictureId: " + pictureId)
+    console.log("db.js insertComment userName: " + userName)
+    console.log("db.js insertComment message: " + message)
+    return new Promise(function (resolve, reject) {
+        var stmt = db.prepare(`INSERT INTO Comment (PictureId, UserName, Message) VALUES (?, ?, ?)`);
+        stmt.run(pictureId, userName, message, function (err) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            console.log(this.lastID);
+            resolve(this.lastID);
+        });
+        stmt.finalize();
+    });
+}
+
+function getPictureComments(pictureId) {
+    console.log("db.js getPictureComments(pictureId): " + pictureId)
+    return new Promise(function (resolve, reject) {
+        var stmt = "SELECT CommentId as CommentId, PictureId as PictureId, UserName as UserName, Message as Message, Insrt_TS as Date FROM Comment where PictureId = ?";
+        db.all(stmt, pictureId, function (err, rows) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(rows);
+        });
+    });
 }
 
 exports.insertUser = insertUser;
