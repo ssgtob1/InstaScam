@@ -1,0 +1,6 @@
+Insert into User  (UserName, Password, ProfileName) Values('JMelka', 'JohnPass', 'John')
+
+INSERT INTO Picture (PictureId, UserName, ActualFileName, SystemFileName) VALUES (1, 'JMelka', 'ThePictureFileName.jpg', '123.jpg')
+
+INSERT INTO Comment (PictureId, UserName, Message) VALUES (1, 'JMelka', 'message test')
+
