@@ -1,5 +1,5 @@
 var userName = "";
-var userPassword ="";
+var userPassword = "";
 var InstaScam = React.createClass({
 
     getInitialState: function () {
@@ -12,7 +12,7 @@ var InstaScam = React.createClass({
 
     render: function () {
         if (this.state.loggedInUser !== "") {
-            return (<PicList user={this.loggedInUser} />);
+            return (<PicList user={this.state.loggedInUser} />);
         } else {
             return (
                 <Login setLoggedIn={this.logMeIn} />
@@ -53,12 +53,15 @@ var Login = React.createClass({
             "userName": userName,
             "password": userPassword
         };
-        alert(userObj.userName);
+        console.log(userObj.userName);
         var that = this;
         $.post("/login/", userObj, function (data) {
 
         }).done(function (loggedInUser) {
+            console.log('about to set state');
             that.setState({ error: false });
+            console.log('after set state');
+            console.log(loggedInUser);
             that.props.setLoggedIn(loggedInUser.UserName);
 
         }).fail(function () {
@@ -118,27 +121,27 @@ var PicList = React.createClass({
         return { picList: [] };
     },
 
-    componentWillMount: function () {
+    componentDidMount: function () {
         var that = this;
-        $.getJSON("/userfeed/" + this.props.user, function (data) {
+        console.log(this.props.user);
+        $.getJSON("/getPictures/" + this.props.user, function (data) {
             that.setState({ picList: data });
-
         });
     },
 
     render: function () {
         return (
-            <div id="twitterHome">
-                <h1>Welcome to Twitter Clone!</h1>
+            <div id="instahome">
+                <h1>Welcome to Instagram Pictures!</h1>
                 <div className="yui3-g">
                     <div className="yui3-u-1">
-                        welcome
+                        Welcome
                     </div>
                     <div className="yui3-u-2-3">
-                        <div id="tweetFeed">
+                        <div id="picFeed">
                             {
-                                this.state.tweetList.map(function (val, idx) {
-                                    return <Tweet key={val.time} data={val}/>;
+                                this.state.picList.map(function (val, idx) {
+                                    return <Pic key={idx} data={val}/>;
                                 })
                             }
                         </div>
@@ -154,22 +157,20 @@ var PicList = React.createClass({
     }
 });
 
-var Tweet = React.createClass({
+var Pic = React.createClass({
     getInitialState: function () {
         return {};
     },
 
     render: function () {
+        var data = this.props.data;
+        var picLocation = "/photos/" + data.UserName + "/" + data.SystemFileName;
         return (
-            <div className="yui3-g">
-                <div className="yui3-u">
-                    <div className="yui3-g">
-                        <div className="yui3-u-1"> 
-                            {this.props.data.tweetText}
-                        </div>
-                        <div className="yui3-u-1-2">{this.props.data.name}</div>
-                        <div className="yui3-u-1-2">{this.props.data.time}</div>
-                    </div>
+            <div className="row">
+                <div className="span2 offset5">
+                    <img src={picLocation}/>
+                    <br/>
+                    File: {data.ActualFileName}
                 </div>
             </div>
 

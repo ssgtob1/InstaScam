@@ -91,7 +91,7 @@ app.post('/insertPicture/', function (req, res) {
     console.log('insertUser - filename = ' + picture.filename);
     console.log('insertUser - fileTs = ' + fileTs);
 
-    var insertPic = dbFile.insertPicture(picture.username, picture.filename, fileTs);
+    var insertPic = db.insertPicture(picture.username, picture.filename, fileTs);
 
     insertPic.then((val) => {
         res.send('Picture for ' + picture.username + ' is added successfully!');
@@ -104,15 +104,15 @@ app.post('/insertPicture/', function (req, res) {
 
 });
 
-app.get('/getPictures/', function (req, res) {
+app.get('/getPictures/:username', function (req, res) {
 
     var picture = {
-        username: req.body.username,
+        username: req.params.username,
     };
 
     console.log('input app.get getPictures - username = ' + picture.username);
 
-    var thePictures = dbFile.getPictures(picture.username);
+    var thePictures = db.getPictures(picture.username);
 
     thePictures.then(
         (pictures) => {
@@ -139,7 +139,7 @@ app.post('/insertComment/', function (req, res) {
     console.log('insertComment - username = ' + picture.username);
     console.log('insertComment - message = ' + picture.message);
 
-    var insertPic = dbFile.insertComment(picture.pictureId, picture.username, picture.message);
+    var insertPic = db.insertComment(picture.pictureId, picture.username, picture.message);
 
     insertPic.then((val) => {
         res.send('Comment for ' + picture.pictureId + ' is added successfully!');
@@ -160,7 +160,7 @@ app.get('/getPictureComments/', function (req, res) {
 
     console.log('input app.get getPictureComments - pictureid = ' + picture.pictureId);
 
-    var thePictureComments = dbFile.getPictureComments(picture.pictureId);
+    var thePictureComments = db.getPictureComments(picture.pictureId);
 
     thePictureComments.then(
         (pictureComments) => {
