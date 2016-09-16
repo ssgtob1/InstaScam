@@ -18,18 +18,18 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'));
 
 
-app.post('/login', function(req, res) {
+app.post('/login/', function(req, res) {
     var login = {
         userName: req.body.userName,
         password: req.body.password
     };
-    console.log(login.userid);
+    console.log(login.userName);
     
     var p = db.getUser(login.userName);
     p.then(
         (val) => {
             
-            if (login.password == val.password) {
+            if (login.password === val.Password) {
                 res.send(val);
              
             } else {
@@ -45,7 +45,7 @@ app.post('/login', function(req, res) {
     )
 });
 
-app.post('/insertUser', function(req, res) {
+app.post('/insertUser/', function(req, res) {
     var user = {
         userName: req.body.userName,
         password: req.body.password,
