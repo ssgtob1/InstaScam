@@ -135,7 +135,7 @@ var PicList = React.createClass({
                 <h1>Welcome to Instagram Pictures!</h1>
                 <div className="yui3-g">
                     <div className="yui3-u-1">
-                        Welcome
+                        Welcome {this.props.user}
                     </div>
                     <div className="yui3-u-2-3">
                         <div id="picFeed">
