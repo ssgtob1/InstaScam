@@ -164,7 +164,7 @@ var Tweet = React.createClass({
             <div className="yui3-g">
                 <div className="yui3-u">
                     <div className="yui3-g">
-                        <div className="yui3-u-1">
+                        <div className="yui3-u-1"> 
                             {this.props.data.tweetText}
                         </div>
                         <div className="yui3-u-1-2">{this.props.data.name}</div>
