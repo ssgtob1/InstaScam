@@ -1,4 +1,8 @@
 Insert into User  (UserName, Password, ProfileName) Values('JMelka', 'JohnPass', 'John')
+Insert into User  (UserName, Password, ProfileName) Values('testUserName', 'testPassword', 'testProfileName');
+Insert into User  (UserName, Password, ProfileName) Values('user', 'password', 'userProfile');
+Insert into User  (UserName, Password, ProfileName) Values('Joe', 'joepass', 'Joe Cool');
+Insert into User  (UserName, Password, ProfileName) Values('blaa', 'blaaPass', 'blaaProfile');
 
 INSERT INTO Picture (PictureId, UserName, ActualFileName, SystemFileName) VALUES (1, 'JMelka', 'ThePictureFileName.jpg', '123.jpg')
 
