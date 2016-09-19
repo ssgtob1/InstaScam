@@ -11,7 +11,7 @@ var multer = require('multer'),
     bodyParser = require('body-parser'),
     path = require('path');
 
-var fs = require('fs-extra')
+var fs = require('fs-extra');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({
 
 }));
 
-
-app.use(express.static('public'));
+//
+app.use('/static', express.static(__dirname + '/public'));
 
 
 app.post('/login/', function (req, res) {
@@ -80,9 +80,9 @@ app.post('/insertUser/', function (req, res) {
         )
 });
 
-app.post('/insertPicture/', multer({ dest: './photos/' }).single('upl'), function (req, res) {
-    console.log("insertPicture body:" + req.body);
-    console.log("insertPicture file:" + req.file);
+app.post('/insertPicture/', multer({ dest: './public/photos/' }).single('dropzone'), function (req, res) {
+   // console.log("insertPicture body:" + req.body);
+  //  console.log("insertPicture file:" + req.file);
 
     //var time = new Date();
 
@@ -114,12 +114,10 @@ app.post('/insertPicture/', multer({ dest: './photos/' }).single('upl'), functio
 
     var insertPic = db.insertPicture(user.userName, file.actualFileName, file.systemFileName);
 
-    fs.move('./photos/' + req.file.filename, './photos/' + user.userName + '/' + file.systemFileName, function (err) {
+    fs.move('./public/photos/' + req.file.filename, './public/photos/' + user.userName + '/' + file.systemFileName, function (err) {
         if (err) return console.error(err)
         console.log("upload and move file success!")
     })
-
-    var insertPic = db.insertPicture(picture.username, picture.filename, fileTs);
 
     insertPic.then((val) => {
         res.send('Picture for ' + user.userName + ' is added successfully!');
