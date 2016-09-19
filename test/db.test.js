@@ -50,8 +50,8 @@ describe('testing pictures', function () {
 
     it('insert a picture', function () {
 
-        var expected = { UserName: 'JMelka', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123.jpg' };
-        return db.insertPicture('JMelka', 'ThePictureFileName.jpg', '123.jpg').then(
+        var expected = { UserName: 'JMelka', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123' };
+        return db.insertPicture('JMelka', 'ThePictureFileName.jpg', '123').then(
             (pictureId) => {
 
                 return db.getPictures('JMelka');
@@ -61,7 +61,7 @@ describe('testing pictures', function () {
                 return val[0];
             }
             ).should.eventually.contain.keys(expected);
-        // ).should.eventually.contain.keys({ UserName: 'John', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123.jpg' });
+        // ).should.eventually.contain.keys({ UserName: 'John', ActualFileName: 'ThePictureFileName.jpg', SystemFileName: '123' });
     });
 
 
