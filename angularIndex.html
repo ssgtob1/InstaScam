@@ -1,44 +1,39 @@
-<!DOCTYPE html>
-<html>
+<html ng-app="InstaApp">
+
 <head>
-    <title>InstaScam</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
-    <!-- Bootstrap -->
-    <link href="/bootstrap/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/customcss/ourcss.css" rel="stylesheet" >
-
+    <title>AngularApp for InstaScam</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+    <script>
+        var InstaApp = angular.module('InstaApp', []);
+        InstaApp.controller('InstaCtrl', function ($scope, $http) {
+            $scope.getPictures = function(){
+                $http.get("/getPictures/" + $scope.userName, {cache: false}).then(function(response) {
+                    console.dir(response);
+                    console.log($scope.userName);
+                    $scope.pictures = response.data;
+                });
+            };
+        });
+    </script>
 </head>
-<style>
-    @import url(http://weloveiconfonts.com/api/?family=entypo);
-    @import url(http://fonts.googleapis.com/css?family=Roboto);
 
 
+<body ng-controller="InstaCtrl">
+    <form ng-submit="getPictures()">
+        <input type="text" ng-model="userName">
+        <input type="submit" value="userPics">
 
-</style>
-
-</head>
-<body>
-
-<div id="InstaScam"></div>
-
-
+    <table>
+        <tr>
+            <th>User Picture</th>
+            <th>User Picture Name</th>
+        </tr>
+        <tr ng-repeat="picture in pictures">
+            <td><img ng-src="/static/photos/JMelka/{{picture.SystemFileName}}" width="100" /></td>
+            <td>{{picture.ActualFileName}}</td>
+        </tr>
+    </table>
+</form>
 
 </body>
-<script src="/angularApp.js"> </script>
-<script>
-
-    $(".user").focusin(function(){
-        $(".inputUserIcon").css("color", "#e74c3c");
-    }).focusout(function(){
-        $(".inputUserIcon").css("color", "white");
-    });
-
-    $(".pass").focusin(function(){
-        $(".inputPassIcon").css("color", "#e74c3c");
-    }).focusout(function(){
-        $(".inputPassIcon").css("color", "white");
-    });
-</script>
-
 </html>

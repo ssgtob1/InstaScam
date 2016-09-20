@@ -1,8 +1,5 @@
 var express = require('express'),
     app = express(),
-    fs = require('fs'),
-    html = fs.readFileSync('./index.html'),
-    html2 = fs.readFileSync('./angularIndex.html'),
     bodyParser = require('body-parser'),
     db = require('./db'),
     path = require('path'),
@@ -17,8 +14,6 @@ var fs = require('fs-extra');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
-
-
 }));
 
 //
@@ -139,11 +134,12 @@ app.get('/getPictures/:userName', function (req, res) {
 
     console.log('input app.get getPictures - userName = ' + picture.userName);
 
+
     var thePictures = db.getPictures(picture.userName);
 
     thePictures.then(
         (pictures) => {
-            console.log("output app.get getPictures: " + pictures);
+            console.dir(pictures);
             res.send(pictures);
         }
     ).catch(
@@ -226,17 +222,11 @@ app.post('/likeTweet', function (req, res) {
 
 
 app.get('/angular', function(req, res) {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    res.end(html2);
+    res.sendFile(__dirname + '/angularIndex.html');
 });
 
 app.get('/', function(req, res) {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    res.end(html);
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/mainApp', function (req, res) {
