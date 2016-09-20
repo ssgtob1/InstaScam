@@ -11,6 +11,13 @@ var multer = require('multer'),
 
 var fs = require('fs-extra');
 
+var session = require('express-session')
+app.use(session({
+    secret: 'currentUser',
+    resave: false,
+    saveUninitialized: false
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -18,6 +25,16 @@ app.use(bodyParser.urlencoded({
 
 //
 app.use('/static', express.static(__dirname + '/public'));
+
+function checkAuth(req, res, next) {
+
+    if (!req.session.currentUser) {
+        res.sendFile(path.join(__dirname + '/login.html'));
+    } else {
+        next();
+    }
+}
+
 
 
 app.post('/login/', function (req, res) {
@@ -32,11 +49,14 @@ app.post('/login/', function (req, res) {
         (val) => {
 
             if (login.password === val.Password) {
-                res.send(val);
+               req.session.currentUser = {
+                userName: login.userName
+            };
 
             } else {
                 throw 'Username or password issue!';
             }
+            res.redirect('/');       
         }
     ).catch(
         (err) => {
@@ -225,8 +245,12 @@ app.get('/angular', function(req, res) {
     res.sendFile(__dirname + '/angularIndex.html');
 });
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+app.get('/', checkAuth, function(req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    res.end(html);
+
 });
 
 app.get('/mainApp', function (req, res) {
