@@ -1,3 +1,6 @@
+
+
+
 var userName = "";
 var userPassword ="";
 var InstaScam = React.createClass({
@@ -34,7 +37,9 @@ var Register = React.createClass({
     render: function () {
         return (
             <div className="span3 offset8 pull-left" >
-                <a href="#" className="btn btn-primary btn-large" onClick={this.handleClick}><i className="icon-white icon-user"></i> Register New User</a>
+                <a href="#" className="btn btn-primary btn-large" onClick={this.handleClick}>
+
+                    <i className="icon-white icon-user"></i> Register New User</a>
             </div>
         )
 
