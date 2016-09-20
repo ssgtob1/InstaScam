@@ -1,9 +1,14 @@
+
 var React = require('react');
 var Dropzone = require('react-dropzone');
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import request from 'superagent';
+
+
+
+
 
 var userName = "";
 var userPassword = ""; 
@@ -42,7 +47,9 @@ var Register = React.createClass({
     render: function () {
         return (
             <div className="span3 offset8 pull-left" >
-                <a href="#" className="btn btn-primary btn-large" onClick={this.handleClick}><i className="icon-white icon-user"></i> Register New User</a>
+                <a href="#" className="btn btn-primary btn-large" onClick={this.handleClick}>
+
+                    <i className="icon-white icon-user"></i> Register New User</a>
             </div>
         )
 

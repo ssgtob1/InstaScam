@@ -2,6 +2,7 @@ var express = require('express'),
     app = express(),
     fs = require('fs'),
     html = fs.readFileSync('./index.html'),
+    html2 = fs.readFileSync('./angularIndex.html'),
     bodyParser = require('body-parser'),
     db = require('./db'),
     path = require('path'),
@@ -223,7 +224,15 @@ app.post('/likeTweet', function (req, res) {
 });
 
 
-app.get('/', function (req, res) {
+
+app.get('/angular', function(req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    res.end(html2);
+});
+
+app.get('/', function(req, res) {
     res.writeHead(200, {
         'Content-Type': 'text/html'
     });
